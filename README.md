@@ -125,8 +125,8 @@ module.exports = mongoose.model("user", userSchema);
     const User = require("../schemas/User");
     const jwt = require("jsonwebtoken");
 
-    const createToken = (\_id) => {
-    return jwt.sign({ \_id }, process.env.SECRET, { expiresIn: "1d" });
+    const createToken = (_id) => {
+    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "1d" });
     };
 
     // login user
@@ -154,7 +154,7 @@ module.exports = mongoose.model("user", userSchema);
         try {
             const user = await User.signup(email, password);
             //create token
-            const token = createToken(user.\_id);
+            const token = createToken(user._id);
             res.status(200).json({ email, token });
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -296,7 +296,7 @@ module.exports = app;
         // Verify the token and make sure it hasn't been tampered with
 
         try {
-            const { \_id } = jwt.verify(token, process.env.SECRET);
+            const { _id } = jwt.verify(token, process.env.SECRET);
 
             //attaching the user to the request here in the middleware will make it available in whatever comes after the middleware
             //use the select() method to only attach the id rather than the whole document containing email and pass and so on
