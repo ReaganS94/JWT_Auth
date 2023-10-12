@@ -296,11 +296,11 @@ module.exports = app;
         // Verify the token and make sure it hasn't been tampered with
 
         try {
-            const { _id } = jwt.verify(token, process.env.SECRET);
+            const { id } = jwt.verify(token, process.env.SECRET);
 
             //attaching the user to the request here in the middleware will make it available in whatever comes after the middleware
             //use the select() method to only attach the id rather than the whole document containing email and pass and so on
-            req.user = await User.findOne({ _id }).select("_id");
+            req.user = await User.findOne({ _id: id }).select("_id");
             next();
         } catch (error) {
             console.log(error);
